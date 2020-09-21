@@ -6,10 +6,11 @@ const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 
-//REGISTER USER
-//@@@@@@@@@@@@@
+// @route POST users/register
+// @desc Save new User
+// @access Public
 router.post(
-  "/",
+  "/register",
   [
     check("name", "Name is required").not().isEmail(),
     check("email", "Email is required").not().isEmpty(),
@@ -50,6 +51,7 @@ router.post(
       const payload = {
         user: {
           id: user.id,
+          role: 0,
         },
       };
       jwt.sign(
@@ -68,13 +70,14 @@ router.post(
   }
 );
 
-//LOGIN
-//@@@@@@@@@@@@@
+// @route POST users/login
+// @desc LOGIN
+// @access Public
 router.post(
-  "/",
+  "/login",
   [
     check("email", "Email is required").not().isEmpty(),
-    check("password", "Password is required").not().exists(),
+    check("password", "Password is required").not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
