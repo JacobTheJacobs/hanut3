@@ -6,8 +6,8 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
 
   const PostData = () => {
-    fetch("http//localhost:500/singin", {
-      methohd: "post",
+    fetch("http//localhost:5000/users/singin", {
+      method: "post",
       headers: {
         "Content-Type": "application/json",
       },
@@ -54,7 +54,12 @@ const SignIn = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            <input type="submit" className="fadeIn fourth" value="Log In" />
+            <input
+              type="button"
+              className="fadeIn fourth"
+              value="Log In"
+              onClick={() => PostData()}
+            />
           </form>
 
           <div id="formFooter">

@@ -12,14 +12,15 @@ const config = require("config");
 router.post(
   "/register",
   [
-    check("name", "Name is required").not().isEmail(),
-    check("email", "Email is required").not().isEmpty(),
+    check("name", "Name is required").not().isEmpty(),
+    check("email", "Email is required").not().isEmail(),
     check("password", "Password is required of 6 or more charecters")
       .not()
       .isLength({ min: 6 }),
   ],
   async (req, res) => {
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
