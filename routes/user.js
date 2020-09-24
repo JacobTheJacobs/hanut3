@@ -13,14 +13,14 @@ router.post(
   "/register",
   [
     check("name", "Name is required").not().isEmpty(),
-    check("email", "Email is required").not().isEmail(),
-    check("password", "Password is required of 6 or more charecters")
-      .not()
-      .isLength({ min: 6 }),
+    check("email", "Email is required").isEmail(),
+    check("password", "Password is required of 6 or more charecters").isLength({
+      min: 6,
+    }),
   ],
   async (req, res) => {
     const errors = validationResult(req);
-
+    console.log(errors);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
@@ -77,11 +77,13 @@ router.post(
 router.post(
   "/login",
   [
-    check("email", "Email is required").not().isEmpty(),
+    check("email", "Email is required").isEmail(),
     check("password", "Password is required").not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
+
+    console.log(errors);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
@@ -111,13 +113,16 @@ router.post(
           id: user.id,
         },
       };
+      console.log(payload);
+
       jwt.sign(
         payload,
         config.get("jwtSecret"),
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
-          res.json({ token });
+          const { _id, name, email } = user;
+          res.json({ token, user: { _id, name, email } });
         }
       );
     } catch (err) {

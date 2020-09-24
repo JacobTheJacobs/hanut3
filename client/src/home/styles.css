@@ -1,0 +1,11 @@
+.ehPCsb {
+  height: auto;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  display: flex;
+}

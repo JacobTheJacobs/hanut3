@@ -4,35 +4,44 @@ import "./style.css";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useHistory, Link } from "react-router-dom";
+
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [name, setName] = useState("");
+  const history = useHistory();
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
+    if (password !== password2) {
+      return toast.error("Passwords don't match");
+    }
     const headers = {
       "Content-Type": "application/json",
     };
 
     const data = {
-      name: "",
-      email: "",
-      password: "",
+      name: name,
+      email: email,
+      password: password,
     };
+    try {
+      await axios
+        .post("http://localhost:5000/users/register", data, headers)
+        .then((response) => {
+          redirectToLogin();
+        })
+        .catch((error) => {
+          error.response.data.errors.map((err) => toast.error(err.msg));
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    axios
-      .post("http://localhost:5000/users/register", data)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error.response.data.errors);
-
-        const errorArray = [];
-        error.response.data.errors.map((err) => toast(err.msg));
-        return errorArray;
-      });
+  const redirectToLogin = () => {
+    history.push("/signin");
   };
 
   return (
@@ -65,7 +74,7 @@ const SignUp = () => {
               id="login"
               className="fadeIn second"
               name="login"
-              placeholder="Name"
+              placeholder="שם"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
@@ -75,25 +84,25 @@ const SignUp = () => {
               id="login"
               className="fadeIn second"
               name="login"
-              placeholder="Email"
+              placeholder="מייל"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <input
-              type="text"
+              type="password"
               id="login"
               className="fadeIn second"
               name="login"
-              placeholder="Password"
+              placeholder="סיסמא"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <input
-              type="text"
+              type="password"
               id="password"
               className="fadeIn third"
               name="login"
-              placeholder="Confirm Password"
+              placeholder="אשר סיסמא"
               value={password2}
               onChange={(e) => setPassword2(e.target.value)}
             />
@@ -102,19 +111,16 @@ const SignUp = () => {
               type="button"
               onClick={() => onSubmit()}
               className="fadeIn fourth"
-              value="Log In"
+              value="הירשם"
             />
           </form>
 
           <div id="formFooter">
-            <a className="underlineHover" href="#">
-              Forgot Password?
-            </a>
             <br></br>
-            <br></br>
-            <a className="underlineHover" href="#">
-              Already have an account?
-            </a>
+
+            <Link className="underlineHover" to="/signin">
+              יש לי כבר משתמש
+            </Link>
           </div>
         </div>
       </div>

@@ -1,36 +1,71 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./style.css";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import { useHistory, Link } from "react-router-dom";
+import Cookies from "universal-cookie";
+import { UserContext } from "../routes";
 
 const SignIn = () => {
+  const { state, dispatch } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const history = useHistory();
+  const cookies = new Cookies();
 
-  const PostData = () => {
-    fetch("http//localhost:5000/users/singin", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: "",
-        password: "",
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
+  const onSubmit = () => {
+    const headers = {
+      "Content-Type": "application/json",
+    };
+
+    const data = {
+      email: email,
+      password: password,
+    };
+
+    axios
+      .post("http://localhost:5000/users/login", data, headers)
+      .then((response) => {
+        console.log(response.data);
+        cookies.set("-t", response.data.token, { path: "/" });
+        cookies.set("-u", JSON.stringify(response.data.user), { path: "/" });
+        dispatch({ type: "USER", payload: data.user });
+        redirectToHome();
+      })
+      .catch((error) => {
+        console.log(error);
+        error.response.data.errors.map((err) => toast.error(err.msg));
       });
+  };
+
+  const redirectToHome = () => {
+    history.push("/");
   };
 
   return (
     <div>
       <div className="wrapper fadeInDown">
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <div id="formContent">
           <div className="fadeIn first">
             <img
               src="https://library.kissclipart.com/20181001/wbw/kissclipart-gsmnet-ro-clipart-computer-icons-user-avatar-4898c5072537d6e2.png"
               id="icon"
               alt="User Icon"
+              onClick={() => {
+                setEmail("ggg@ggg.com");
+                setPassword("gggggg");
+              }}
             />
           </div>
 
@@ -40,7 +75,7 @@ const SignIn = () => {
               id="login"
               className="fadeIn second"
               name="login"
-              placeholder="Email"
+              placeholder="מייל"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -49,7 +84,7 @@ const SignIn = () => {
               id="password"
               className="fadeIn third"
               name="login"
-              placeholder="Password"
+              placeholder="סיסמא"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -57,20 +92,20 @@ const SignIn = () => {
             <input
               type="button"
               className="fadeIn fourth"
-              value="Log In"
-              onClick={() => PostData()}
+              value="היכנס"
+              onClick={() => onSubmit()}
             />
           </form>
 
           <div id="formFooter">
             <a className="underlineHover" href="#">
-              Forgot Password?
+              שכחתי את הסיסמא
             </a>
             <br></br>
             <br></br>
-            <a className="underlineHover" href="#">
-              Already have an account?
-            </a>
+            <Link className="underlineHover" to="/signup">
+              משתמש חדש
+            </Link>
           </div>
         </div>
       </div>
