@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
 .container1 {
   position: relative;
   text-align: center;
@@ -35,7 +36,7 @@
 /* Centered text */
 .centered {
   position: absolute;
-  top: 30%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -43,4 +44,35 @@
 .logo {
   width: 80px;
   height: 80px;
+}
+
+@media only screen and (max-width: 768px) {
+  h1 {
+    font-size: 20px;
+  }
+  h5 {
+    font-size: 10px;
+  }
+
+  .logo {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  h1 {
+    font-size: 10px;
+  }
+  h5 {
+    font-size: 5px;
+  }
+  .logo {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.wrapper1 {
+  background-color: #56baed;
 }
