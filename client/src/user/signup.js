@@ -33,7 +33,7 @@ const SignUp = () => {
           redirectToLogin();
         })
         .catch((error) => {
-          error.response.data.errors.map((err) => toast.error(err.msg));
+          error.data.errors.map((err) => toast.error(err.msg));
         });
     } catch (error) {
       console.log(error);

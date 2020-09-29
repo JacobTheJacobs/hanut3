@@ -5,6 +5,7 @@ import SingIn from "./user/signin";
 import Home from "./user/home";
 import { reducer, intialState } from "./redux/reducers/userReducer";
 import Cookies from "universal-cookie";
+import AdminPage from "./admin/homeAdmin";
 
 export const UserContext = createContext();
 
@@ -17,7 +18,7 @@ const Routing = () => {
     console.log(user);
     if (user) {
       dispatch({ type: "USER", payload: user });
-      history.push("/");
+      history.push("/admin");
     } else {
       history.push("/signin");
     }
@@ -27,6 +28,7 @@ const Routing = () => {
       <Switch>
         <Route path="/signin" exact component={SingIn} />
         <Route path="/signup" exact component={SignUp} />
+        <Route path="/admin" exact component={AdminPage} />
         <Route path="/" exact component={Home} />
       </Switch>
     </div>

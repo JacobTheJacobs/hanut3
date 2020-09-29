@@ -18,7 +18,7 @@ const Product = require("../models/Product");
 // @route POST api/product/article
 // @desc Create new Product
 // @access Public
-router.post("/article", auth, (req, res) => {
+router.post("/add", auth, admin, (req, res) => {
   const product = new Product(req.body);
 
   product.save((err, doc) => {

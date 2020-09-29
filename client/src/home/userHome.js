@@ -1,47 +1,10 @@
 import React, { useState } from "react";
 import "./styles.css";
-import Slider from "react-slick";
+
 import Carousel from "./carusell";
 
 const UserHome = () => {
   const [customStyle, setCustomeStyle] = useState("none");
-  const [settings, setSettings] = useState({
-    dots: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
-    initialSlide: 0,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true,
-          marginLeft1: 40,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
-          marginLeft1: 20,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          marginLeft1: 0,
-        },
-      },
-    ],
-  });
 
   const w3_open3 = (e) => {
     console.log(e);
@@ -85,47 +48,44 @@ const UserHome = () => {
           <b>LOGO</b>
         </h3>
       </div>
-      <div
-        className="w3-padding-64 w3-large w3-text-grey"
-        style={{ fontWeight: "bold", display: customStyle }}
-      >
-        <a href="#" className="w3-bar-item w3-button">
-          Shirts
-        </a>
-        <a href="#" className="w3-bar-item w3-button">
-          Dresses
-        </a>
 
-        <div
-          id="demoAcc"
-          className="w3-bar-block w3-hide w3-padding-large w3-medium"
-        >
-          <a href="#" className="w3-bar-item w3-button w3-light-grey">
-            <i className="fa fa-caret-right w3-margin-right"></i>Skinny
-          </a>
-          <a href="#" className="w3-bar-item w3-button">
-            Relaxed
-          </a>
-          <a href="#" className="w3-bar-item w3-button">
-            Bootcut
-          </a>
-          <a href="#" className="w3-bar-item w3-button">
-            Straight
-          </a>
-        </div>
-        <a href="#" className="w3-bar-item w3-button">
-          Jackets
+      <a href="#" className="w3-bar-item w3-button">
+        Shirts
+      </a>
+      <a href="#" className="w3-bar-item w3-button">
+        Dresses
+      </a>
+
+      <div
+        id="demoAcc"
+        className="w3-bar-block w3-hide w3-padding-large w3-medium"
+      >
+        <a href="#" className="w3-bar-item w3-button w3-light-grey">
+          <i className="fa fa-caret-right w3-margin-right"></i>Skinny
         </a>
         <a href="#" className="w3-bar-item w3-button">
-          Gymwear
+          Relaxed
         </a>
         <a href="#" className="w3-bar-item w3-button">
-          Blazers
+          Bootcut
         </a>
         <a href="#" className="w3-bar-item w3-button">
-          Shoes
+          Straight
         </a>
       </div>
+      <a href="#" className="w3-bar-item w3-button">
+        Jackets
+      </a>
+      <a href="#" className="w3-bar-item w3-button">
+        Gymwear
+      </a>
+      <a href="#" className="w3-bar-item w3-button">
+        Blazers
+      </a>
+      <a href="#" className="w3-bar-item w3-button ">
+        Shoes
+      </a>
+
       <a href="#footer" className="w3-bar-item w3-button w3-padding">
         Contact
       </a>

@@ -33,8 +33,7 @@ const SignIn = () => {
         redirectToHome();
       })
       .catch((error) => {
-        console.log(error);
-        error.response.data.errors.map((err) => toast.error(err.msg));
+        console.log(error.data);
       });
   };
 
