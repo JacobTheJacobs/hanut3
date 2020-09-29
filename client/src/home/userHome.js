@@ -1,7 +1,47 @@
 import React, { useState } from "react";
+import "./styles.css";
+import Slider from "react-slick";
+import Carousel from "./carusell";
 
 const UserHome = () => {
   const [customStyle, setCustomeStyle] = useState("none");
+  const [settings, setSettings] = useState({
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true,
+          marginLeft1: 40,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+          marginLeft1: 20,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          marginLeft1: 0,
+        },
+      },
+    ],
+  });
 
   const w3_open3 = (e) => {
     console.log(e);
@@ -96,6 +136,32 @@ const UserHome = () => {
     </nav>
   );
 
+  const InputSearch = () => {
+    return (
+      <div>
+        <form className="example" action="action_page.php">
+          <input type="text" placeholder="Search.." name="search" />
+          <button type="submit">
+            <i className="fa fa-search"></i>
+          </button>
+        </form>
+      </div>
+    );
+  };
+
+  const PageContent = () => (
+    <div className="w3-main" style={{ marginLeft: "250px" }}>
+      <div className="w3-hide-large" style={{ marginTop: "83px" }}></div>
+      <br></br>
+
+      <div class="w3-display-container w3-container">
+        <InputSearch />
+        <br></br>
+        <Carousel />
+      </div>
+    </div>
+  );
+
   return (
     <div>
       <Header />
@@ -108,6 +174,8 @@ const UserHome = () => {
         title="close side menu"
         id="myOverlay"
       ></div>
+
+      <PageContent />
     </div>
   );
 };

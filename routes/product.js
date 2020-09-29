@@ -18,34 +18,14 @@ const Product = require("../models/Product");
 // @route POST api/product/article
 // @desc Create new Product
 // @access Public
-router.post("/", auth, admin, (req, res) => {
-  //
-  let form = new formidable.IncomingForm();
-  //whaever image type exxtensions will be there
-  form.keepExtensions = true;
+router.post("/article", auth, (req, res) => {
+  const product = new Product(req.body);
 
-  form.parse(req, (err, fields, files) => {
-    if (err) {
-      return res.status(400).json({
-        error: "Image couldnot be uploaded",
-      });
-    }
-    const product = new Product(req.body);
-
-    if (files.photo) {
-      product.photo.data = fs.readFileSync(files.photo.path);
-      product.photo.contentType = files.photo.type;
-    }
-
-    product.save((err, doc) => {
-      if (err) {
-        return res.json({ success: false, err });
-      }
-
-      res.status(200).json({
-        success: true,
-        article: doc,
-      });
+  product.save((err, doc) => {
+    if (err) return res.json({ success: false, err });
+    res.status(200).json({
+      success: true,
+      article: doc,
     });
   });
 });
