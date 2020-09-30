@@ -6,6 +6,7 @@ import Home from "./user/home";
 import { reducer, intialState } from "./redux/reducers/userReducer";
 import Cookies from "universal-cookie";
 import AdminPage from "./admin/homeAdmin";
+import AddProduct from "./admin/addProduct";
 
 export const UserContext = createContext();
 
@@ -29,6 +30,7 @@ const Routing = () => {
         <Route path="/signin" exact component={SingIn} />
         <Route path="/signup" exact component={SignUp} />
         <Route path="/admin" exact component={AdminPage} />
+        <Route path="/admin/add" exact component={AddProduct} />
         <Route path="/" exact component={Home} />
       </Switch>
     </div>

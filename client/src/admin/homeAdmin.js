@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
-const AdminPage = () => {
+const AdminPage = (props) => {
   const [customStyle, setCustomeStyle] = useState("none");
 
   const w3_open3 = (e) => {
@@ -71,9 +72,9 @@ const AdminPage = () => {
           <a href="#" className="w3-bar-item w3-button w3-padding w3-blue">
             <i className="fa fa-users fa-fw"></i>  Overview
           </a>
-          <a href="#" className="w3-bar-item w3-button w3-padding">
-            <i className="fa fa-eye fa-fw"></i>  Views
-          </a>
+          <Link to="/admin/add" className="w3-bar-item w3-button w3-padding">
+            <i className="fa fa-plus fa-fw"></i>  הוסף מוצר
+          </Link>
           <a href="#" className="w3-bar-item w3-button w3-padding">
             <i className="fa fa-users fa-fw"></i>  Traffic
           </a>
@@ -179,6 +180,7 @@ const AdminPage = () => {
         id="myOverlay"
       ></div>
       <PageContent />
+      {props.children}
     </div>
   );
 };
