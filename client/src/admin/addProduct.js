@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdminPage from "./homeAdmin";
+import axios from "axios";
+
+const url = "http://localhost:5000/category";
 
 const AddProduct = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState([]);
   const [sold, setSold] = useState(0);
   const [images, setImages] = useState([]);
 
@@ -13,13 +16,26 @@ const AddProduct = () => {
     console.log(name);
   };
 
+  useEffect(() => {
+    let isSubscribed = true;
+    async function fetchData() {
+      const response = await axios.get(url);
+      if (isSubscribed) {
+        setCategory(response.data);
+      }
+    }
+    fetchData();
+
+    return () => (isSubscribed = false);
+  }, []);
+
   return (
     <div>
       <AdminPage>
         <br></br>
-        <div class="container" style={{ width: "40%" }}>
+        <div className="container" style={{ width: "40%" }}>
           <form>
-            <h4 for="fname">שם מוצר</h4>
+            <h4>שם מוצר</h4>
             <input
               type="text"
               id={name}
@@ -29,23 +45,30 @@ const AddProduct = () => {
               onChange={(e) => setName(e.target.value)}
             />
             <br></br>
-            <h4 for="lname">מחיר</h4>
+            <h4>מחיר</h4>
             <input
               type="number"
               id={price}
               name={price}
               placeholder="מחיר"
               style={{ width: "10%" }}
-              onChange={(e) => setPrice(e.target.value)}
+              onChange={(e) =>
+                e.target.value < 0
+                  ? (e.target.value = 0)
+                  : setPrice(e.target.value)
+              }
             />
             <br></br>
-            <h4 for="country">קטגוריה</h4>
+            <h4>קטגוריה</h4>
             <select id="country" name="country" style={{ width: "30%" }}>
-              <option value="australia">Australia</option>
-              <option value="canada">Canada</option>
+              {category.map((cat, i) => (
+                <option key={i} id={cat} value={cat}>
+                  {cat.name}
+                </option>
+              ))}
             </select>
             <br></br>
-            <h4 for="subject">תיאור</h4>
+            <h4>תיאור</h4>
             <textarea
               id={description}
               name={description}

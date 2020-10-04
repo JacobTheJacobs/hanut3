@@ -11,7 +11,7 @@ const admin = require("../middleware/admin");
 // @route POST api/product/category
 // @desc Save new Category
 // @access Private
-router.post("/category", auth, admin, (req, res) => {
+router.post("/", auth, admin, (req, res) => {
   const category = new Category(req.body);
 
   category.save((err, doc) => {
@@ -26,7 +26,7 @@ router.post("/category", auth, admin, (req, res) => {
 // @route GET api/product/category
 // @desc Get all Categories
 // @access Private
-router.get("/category", (req, res) => {
+router.get("/", (req, res) => {
   Category.find({}, (err, category) => {
     //Find and bring everything {}
     if (err) return res.status(400).send(err);
